@@ -1,0 +1,90 @@
+From: Ghislain Antony Vaillant <ghisvail@gmail.com>
+Date: Mon, 22 Aug 2016 11:48:33 +0100
+Subject: Fix CMake packaging.
+
+---
+ CMakeLists.txt                  |  4 ++--
+ glbinding-config.cmake          | 40 +---------------------------------------
+ source/glbinding/CMakeLists.txt |  2 +-
+ 3 files changed, 4 insertions(+), 42 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7caeb2a..13b973d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -104,7 +104,7 @@ if(UNIX AND SYSTEM_DIR_INSTALL)
+     include(GNUInstallDirs)
+     # Install into the system (/usr/bin or /usr/local/bin)
+     set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
+-    set(INSTALL_CMAKE     "${CMAKE_INSTALL_LIBDIR}/cmake") # /usr/[local]/lib/<arch>/cmake/<project>
++    set(INSTALL_CMAKE     "${CMAKE_INSTALL_LIBDIR}/cmake/${project}") # /usr/[local]/lib/<arch>/cmake/<project>
+     set(INSTALL_EXAMPLES  "share/${project}")       # /usr/[local]/share/<project>
+     set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
+     set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
+@@ -164,7 +164,7 @@ add_subdirectory(deploy)
+ install(FILES "${PROJECT_BINARY_DIR}/VERSION" DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+ 
+ # Install cmake find script for the project
+-install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
++install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_CMAKE} COMPONENT dev)
+ 
+ # Install the project meta files
+ install(FILES AUTHORS   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+diff --git a/glbinding-config.cmake b/glbinding-config.cmake
+index 81ec701..3489871 100644
+--- a/glbinding-config.cmake
++++ b/glbinding-config.cmake
+@@ -1,40 +1,2 @@
++include("${CMAKE_CURRENT_LIST_DIR}/glbinding-export.cmake")
+ 
+-# This config script tries to locate the project either in its source tree
+-# of from an install location.
+-# 
+-# Please adjust the list of submodules to search for.
+-
+-
+-# List of modules
+-set(MODULE_NAMES
+-    glbinding
+-)
+-
+-
+-# Macro to search for a specific module
+-macro(find_module FILENAME)
+-    if(EXISTS "${FILENAME}")
+-        set(MODULE_FOUND TRUE)
+-        include("${FILENAME}")
+-    endif()
+-endmacro()
+-
+-# Macro to search for all modules
+-macro(find_modules PREFIX)
+-    foreach(module_name ${MODULE_NAMES})
+-        find_module("${CMAKE_CURRENT_LIST_DIR}/${PREFIX}/${module_name}/${module_name}-export.cmake")
+-    endforeach(module_name)
+-endmacro()
+-
+-
+-# Try install location
+-set(MODULE_FOUND FALSE)
+-find_modules("cmake")
+-
+-if(MODULE_FOUND)
+-    return()
+-endif()
+-
+-# Try common build locations
+-find_modules("build/cmake")
+-find_modules("build-debug/cmake")
+diff --git a/source/glbinding/CMakeLists.txt b/source/glbinding/CMakeLists.txt
+index 4b55595..3b2f197 100644
+--- a/source/glbinding/CMakeLists.txt
++++ b/source/glbinding/CMakeLists.txt
+@@ -327,6 +327,6 @@ install(DIRECTORY
+ # CMake config
+ install(EXPORT ${target}-export
+     NAMESPACE   ${META_PROJECT_NAME}::
+-    DESTINATION ${INSTALL_CMAKE}/${target}
++    DESTINATION ${INSTALL_CMAKE}
+     COMPONENT   dev
+ )

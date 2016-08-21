@@ -1,0 +1,21 @@
+From: Ghislain Antony Vaillant <ghisvail@gmail.com>
+Date: Sun, 21 Aug 2016 15:35:04 +0100
+Subject: Set versioning properties.
+
+---
+ source/glbinding/CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/source/glbinding/CMakeLists.txt b/source/glbinding/CMakeLists.txt
+index 3b2f197..5e659a2 100644
+--- a/source/glbinding/CMakeLists.txt
++++ b/source/glbinding/CMakeLists.txt
+@@ -196,6 +196,8 @@ set_target_properties(${target}
+     PROPERTIES
+     ${DEFAULT_PROJECT_OPTIONS}
+     FOLDER "${IDE_FOLDER}"
++    VERSION ${META_VERSION}
++    SOVERSION 0
+ )
+ 
+ 

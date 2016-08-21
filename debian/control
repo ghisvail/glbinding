@@ -1,0 +1,96 @@
+Source: glbinding
+Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
+Uploaders: Ghislain Antony Vaillant <ghisvail@gmail.com>
+Section: libs
+Testsuite: autopkgtest
+Priority: optional
+Build-Depends: cmake (>= 3.0),
+               debhelper (>= 9),
+               libglfw3-dev 
+Build-Depends-Indep: doxygen,
+                     graphviz
+Standards-Version: 3.9.8
+Vcs-Browser: https://anonscm.debian.org/cgit/debian-science/packages/glbinding.git
+Vcs-Git: https://anonscm.debian.org/git/debian-science/packages/glbinding.git
+Homepage: https://github.com/cginternals/glbinding
+
+Package: libglbinding0
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: cross-platform C++ binding for OpenGL
+ glbinding leverages modern C++11 features like enum classes,
+ lambdas, and variadic templates, instead of relying on macros;
+ all OpenGL symbols are real functions and variables.
+ . 
+ It provides type-safe parameters, per feature API header, lazy
+ function resolution, multi-context and multi-thread support,
+ global and local function callbacks, meta information about the
+ generated OpenGL binding and the OpenGL runtime, as well as tools
+ and examples for quick-starting your projects.
+ .
+ This package provides the shared libraries.
+
+Package: libglbinding-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: ${misc:Depends},
+         libgl1-mesa-dev | libgl-dev,
+         libglbinding0 (= ${binary:Version})
+Suggests: glbinding-doc
+Description: development files for glbinding
+ glbinding leverages modern C++11 features like enum classes,
+ lambdas, and variadic templates, instead of relying on macros;
+ all OpenGL symbols are real functions and variables.
+ . 
+ It provides type-safe parameters, per feature API header, lazy
+ function resolution, multi-context and multi-thread support,
+ global and local function callbacks, meta information about the
+ generated OpenGL binding and the OpenGL runtime, as well as tools
+ and examples for quick-starting your projects.
+ .
+ This package provides the development files.
+
+Package: glbinding-doc
+Architecture: all
+Multi-Arch: foreign
+Section: doc
+Depends: ${misc:Depends},
+         fonts-font-awesome,
+         libjs-bootstrap,
+         libjs-jquery
+Description: documentation for glbinding
+ glbinding leverages modern C++11 features like enum classes,
+ lambdas, and variadic templates, instead of relying on macros;
+ all OpenGL symbols are real functions and variables.
+ . 
+ It provides type-safe parameters, per feature API header, lazy
+ function resolution, multi-context and multi-thread support,
+ global and local function callbacks, meta information about the
+ generated OpenGL binding and the OpenGL runtime, as well as tools
+ and examples for quick-starting your projects.
+ .
+ This package provides the documentation.
+
+Package: glbinding-tools
+Architecture: any
+Multi-Arch: foreign
+Section: utils
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         libglbinding0 (= ${binary:Version})
+Description: command-line tools for glbinding
+ glbinding leverages modern C++11 features like enum classes,
+ lambdas, and variadic templates, instead of relying on macros;
+ all OpenGL symbols are real functions and variables.
+ .
+ It provides type-safe parameters, per feature API header, lazy
+ function resolution, multi-context and multi-thread support,
+ global and local function callbacks, meta information about the
+ generated OpenGL binding and the OpenGL runtime, as well as tools
+ and examples for quick-starting your projects.
+ .
+ This package provides the command-line tools.

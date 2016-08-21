@@ -1,0 +1,41 @@
+From: Ghislain Antony Vaillant <ghisvail@gmail.com>
+Date: Sun, 21 Aug 2016 20:33:57 +0100
+Subject: Use system css and js libraries.
+
+---
+ docs/api-docs/doxyfile.in | 2 +-
+ docs/api-docs/header.html | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/docs/api-docs/doxyfile.in b/docs/api-docs/doxyfile.in
+index 9deb0be..024be0b 100644
+--- a/docs/api-docs/doxyfile.in
++++ b/docs/api-docs/doxyfile.in
+@@ -1118,7 +1118,7 @@ HTML_EXTRA_STYLESHEET  =
+ # files will be copied as-is; there are no commands or markers available.
+ # This tag requires that the tag GENERATE_HTML is set to YES.
+ 
+-HTML_EXTRA_FILES       = bootstrap.min.css bootstrap.min.js
++HTML_EXTRA_FILES       =
+ 
+ # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
+ # will adjust the colors in the stylesheet and background images according to
+diff --git a/docs/api-docs/header.html b/docs/api-docs/header.html
+index e2f3824..59fd7c4 100644
+--- a/docs/api-docs/header.html
++++ b/docs/api-docs/header.html
+@@ -8,10 +8,10 @@
+ <!--BEGIN PROJECT_NAME--><title>$projectname: $title</title><!--END PROJECT_NAME-->
+ <!--BEGIN !PROJECT_NAME--><title>$title</title><!--END !PROJECT_NAME-->
+ 
+-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+-<link href="$relpath^bootstrap.min.css" rel="stylesheet"/>
+-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+-<script src="$relpath^bootstrap.min.js"></script>
++<link href="/usr/share/fonts-font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
++<link href="/usr/share/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
++<script src="/usr/share/javascript/jquery/jquery.min.js"></script>
++<script src="/usr/share/javascript/bootstrap/js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="$relpath$doxy-boot.js"></script>
+ 
+ <script type="text/javascript" src="$relpath^dynsections.js"></script>

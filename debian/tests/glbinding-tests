@@ -1,0 +1,53 @@
+#!/bin/sh
+# Copyright 2016 Ghislain Antony Vaillant
+#
+# This file is part of the packaging testsuite for glbinding.
+
+set -e
+
+# Presence of $ADTTMP implies that someone will handle cleanup for us, so we
+# can avoid duplicating the effort (signal handling, etc.) here.
+if [ -z "$ADTTMP" ]
+then
+	echo "Required envvar \"$ADTTMP\"is not set" >&2
+	exit 1
+fi
+
+# Copy the upstream testsuite.
+cp -a ./source/tests/* "$AUTOPKGTEST_TMP"
+
+# Copy the upstream CMake configuration.
+cp -a ./cmake "$AUTOPKGTEST_TMP"
+
+cd "$AUTOPKGTEST_TMP"
+
+# Create a standalone CMake project.
+mv CMakeLists.txt CMakeLists.txt.orig
+
+cat << EOF > CMakeLists.txt
+cmake_minimum_required(VERSION 3.0)
+project(glbinding-tests)
+
+if (POLICY CMP0063)
+  cmake_policy(SET CMP0063 NEW)
+endif ()
+
+find_package(glbinding REQUIRED)
+set(META_PROJECT_NAME "glbinding")
+
+list(APPEND CMAKE_MODULE_PATH "\${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(CompileOptions)
+
+set(OPTION_BUILD_TESTS ON)
+set(OPTION_BUILD_GPU_TESTS OFF)
+
+EOF
+
+cat CMakeLists.txt.orig >> CMakeLists.txt
+
+# The RingBuffer test is excluded, since it relies on private headers.
+sed -e '/RingBuffer/ s/^/#/' -i glbinding-test/CMakeLists.txt
+
+# Configure, build and execute.
+mkdir build && cd build
+cmake .. && make && make test

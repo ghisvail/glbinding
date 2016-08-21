@@ -1,0 +1,3 @@
+# Upstream does not provide manpages for the tools yet.
+# See: https://github.com/cginternals/glbinding/issues/204
+binary-without-manpage

@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE = 1
+
+# Hardening options.
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# Possible overlinkage in the tools.
+# See: https://github.com/cginternals/glbinding/issues/203
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+BUILD_OPTIONS = \
+	-DBUILD_SHARED_LIBS=ON \
+	-DOPTION_SELF_CONTAINED=OFF \
+	-DOPTION_BUILD_GPU_TESTS=OFF \
+	-DOPTION_BUILD_EXAMPLES=OFF
+
+# Disable build of tests if nocheck requested.
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+BUILD_OPTIONS += -DOPTION_BUILD_TESTS=ON
+else
+BUILD_OPTIONS += -DOPTION_BUILD_TESTS=OFF
+endif
+
+%:
+	dh $@ --parallel --buildsystem=cmake
+
+override_dh_auto_configure-arch:
+	dh_auto_configure -- $(BUILD_OPTIONS) -DOPTION_BUILD_DOCS=OFF
+
+override_dh_auto_configure-indep:
+	dh_auto_configure -- $(BUILD_OPTIONS) -DOPTION_BUILD_DOCS=ON
+
+override_dh_installdocs-indep:
+	dh_installdocs --indep
+	dh_doxygen --indep

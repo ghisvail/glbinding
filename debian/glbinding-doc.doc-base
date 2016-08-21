@@ -1,0 +1,9 @@
+Document: glbinding-doc
+Title: API documentation for glbinding
+Author: CG Internals
+Abstract: This is the reference documentation for glbinding.
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/glbinding-doc/html/index.html
+Files: /usr/share/doc/glbinding-doc/html/*.html

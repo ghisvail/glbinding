@@ -1,0 +1,5 @@
+Use-GNUInstallDirs.patch
+Fix-CMake-packaging-setup.patch
+Set-versioning-properties.patch
+Use-system-css-and-js-libraries.patch
+Correct-spelling-mistakes-reported-by-lintian.patch

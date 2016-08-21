@@ -1,0 +1,5 @@
+Tests: glbinding-tests
+Depends: cmake,
+         g++ | c++-compiler,
+         libglbinding-dev,
+         libglfw3-dev
