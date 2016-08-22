@@ -1,4 +1,4 @@
-glbinding (2.1.1-1) UNRELEASED; urgency=low
+glbinding (2.1.1-1) unstable; urgency=low
 
   * Initial release. (Closes: #834825)
 
